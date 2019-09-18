@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:design="http://flowable.org/design" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://flowable.org/test" design:palette="flowable-process-palette">
+  <signal id="call1" name="Call1" flowable:scope="global"></signal>
+  <signal id="call2" name="Call2" flowable:scope="global"></signal>
+  <signal id="end" name="End" flowable:scope="global"></signal>
+  <process id="signalTestProcess" name="Signal Test Process" isExecutable="true" flowable:candidateStarterGroups="flowableUser">
+    <extensionElements>
+      <design:stencilid><![CDATA[BPMNDiagram]]></design:stencilid>
+      <design:name><![CDATA[Signal Test Process]]></design:name>
+      <design:id><![CDATA[signalTestProcess]]></design:id>
+      <design:guid><![CDATA[PROCESS_MODEL-87505135-e4d8-49cd-a90a-e68baca7c991]]></design:guid>
+      <design:language><![CDATA[English]]></design:language>
+      <design:creationdate><![CDATA[2019-09-18T13:50:42.168Z]]></design:creationdate>
+      <design:modificationdate><![CDATA[2019-09-18T20:48:27.934Z]]></design:modificationdate>
+    </extensionElements>
+    <startEvent id="startnoneevent1" flowable:initiator="initiator" flowable:formFieldValidation="false">
+      <extensionElements>
+        <flowable:work-form-field-validation><![CDATA[false]]></flowable:work-form-field-validation>
+        <design:stencilid><![CDATA[StartNoneEvent]]></design:stencilid>
+      </extensionElements>
+    </startEvent>
+    <sequenceFlow id="sequenceFlow1" sourceRef="startnoneevent1" targetRef="scriptTask1">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <exclusiveGateway id="exclusive_Databased_Gateway1" default="sequenceFlow4">
+      <extensionElements>
+        <design:stencilid><![CDATA[Exclusive_Databased_Gateway]]></design:stencilid>
+      </extensionElements>
+    </exclusiveGateway>
+    <sequenceFlow id="sequenceFlow2" sourceRef="scriptTask1" targetRef="exclusive_Databased_Gateway1">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <endEvent id="endNoneEvent1">
+      <extensionElements>
+        <design:stencilid><![CDATA[EndNoneEvent]]></design:stencilid>
+      </extensionElements>
+    </endEvent>
+    <sequenceFlow id="sequenceFlow3" sourceRef="exclusive_Databased_Gateway1" targetRef="intermediateSignalEventCatching1">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+        <design:conditionexpression><![CDATA[${false}]]></design:conditionexpression>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${false}]]></conditionExpression>
+    </sequenceFlow>
+    <endEvent id="endNoneEvent2">
+      <extensionElements>
+        <design:stencilid><![CDATA[EndNoneEvent]]></design:stencilid>
+      </extensionElements>
+    </endEvent>
+    <sequenceFlow id="sequenceFlow4" sourceRef="exclusive_Databased_Gateway1" targetRef="intermediateSignalEventThrowing1">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+        <design:defaultflow><![CDATA[true]]></design:defaultflow>
+      </extensionElements>
+    </sequenceFlow>
+    <intermediateCatchEvent id="intermediateSignalEventCatching1">
+      <extensionElements>
+        <design:stencilid><![CDATA[IntermediateSignalEventCatching]]></design:stencilid>
+      </extensionElements>
+      <signalEventDefinition signalRef="end"></signalEventDefinition>
+    </intermediateCatchEvent>
+    <sequenceFlow id="sequenceFlow5" sourceRef="intermediateSignalEventCatching1" targetRef="endNoneEvent1">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <intermediateThrowEvent id="intermediateSignalEventThrowing1">
+      <extensionElements>
+        <design:stencilid><![CDATA[IntermediateSignalEventThrowing]]></design:stencilid>
+      </extensionElements>
+      <signalEventDefinition signalRef="call1"></signalEventDefinition>
+    </intermediateThrowEvent>
+    <sequenceFlow id="sequenceFlow6" sourceRef="intermediateSignalEventThrowing1" targetRef="endNoneEvent2">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <scriptTask id="scriptTask1" name="T01" scriptFormat="groovy" flowable:autoStoreVariables="false">
+      <extensionElements>
+        <design:stencilid><![CDATA[ScriptTask]]></design:stencilid>
+        <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+        <design:name_en_us><![CDATA[T01]]></design:name_en_us>
+        <design:name-run><![CDATA[T01]]></design:name-run>
+        <design:script><![CDATA[execution.setVariable("t01", true)
+System.out.println("T01")]]></design:script>
+      </extensionElements>
+      <script><![CDATA[execution.setVariable("t01", true)
+System.out.println("T01")]]></script>
+    </scriptTask>
+    <subProcess id="eventSubprocess4" name="subProcess" triggeredByEvent="true">
+      <extensionElements>
+        <design:stencilid><![CDATA[EventSubprocess]]></design:stencilid>
+      </extensionElements>
+      <subProcess id="expandedSubProcess1" name="Subprocess">
+        <extensionElements>
+          <design:stencilid><![CDATA[ExpandedSubProcess]]></design:stencilid>
+          <design:name_en_us><![CDATA[Subprocess]]></design:name_en_us>
+          <design:name-run><![CDATA[Subprocess]]></design:name-run>
+        </extensionElements>
+        <startEvent id="startNoneEvent2" flowable:initiator="initiator" flowable:formFieldValidation="false">
+          <extensionElements>
+            <flowable:work-form-field-validation><![CDATA[false]]></flowable:work-form-field-validation>
+            <design:stencilid><![CDATA[StartNoneEvent]]></design:stencilid>
+          </extensionElements>
+        </startEvent>
+        <scriptTask id="scriptTask2" name="T02" scriptFormat="groovy" flowable:autoStoreVariables="false">
+          <extensionElements>
+            <design:stencilid><![CDATA[ScriptTask]]></design:stencilid>
+            <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+            <design:name_en_us><![CDATA[T02]]></design:name_en_us>
+            <design:name-run><![CDATA[T02]]></design:name-run>
+            <design:script><![CDATA[execution.setVariable("t02", true)
+System.out.println("T02")]]></design:script>
+          </extensionElements>
+          <script><![CDATA[execution.setVariable("t02", true)
+System.out.println("T02")]]></script>
+        </scriptTask>
+        <intermediateThrowEvent id="intermediateSignalEventThrowing2">
+          <extensionElements>
+            <design:stencilid><![CDATA[IntermediateSignalEventThrowing]]></design:stencilid>
+          </extensionElements>
+          <signalEventDefinition signalRef="call2"></signalEventDefinition>
+        </intermediateThrowEvent>
+        <endEvent id="endNoneEvent3">
+          <extensionElements>
+            <design:stencilid><![CDATA[EndNoneEvent]]></design:stencilid>
+          </extensionElements>
+        </endEvent>
+        <subProcess id="eventSubprocess3" name="subProcess" triggeredByEvent="true">
+          <extensionElements>
+            <design:stencilid><![CDATA[EventSubprocess]]></design:stencilid>
+          </extensionElements>
+          <startEvent id="startSignalEvent2" isInterrupting="true">
+            <extensionElements>
+              <design:stencilid><![CDATA[StartSignalEvent]]></design:stencilid>
+            </extensionElements>
+            <signalEventDefinition signalRef="call2"></signalEventDefinition>
+          </startEvent>
+          <scriptTask id="scriptTask3" name="T03" scriptFormat="groovy" flowable:autoStoreVariables="false">
+            <extensionElements>
+              <design:stencilid><![CDATA[ScriptTask]]></design:stencilid>
+              <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+              <design:name_en_us><![CDATA[T03]]></design:name_en_us>
+              <design:name-run><![CDATA[T03]]></design:name-run>
+              <design:script><![CDATA[execution.setVariable("t03", true)
+System.out.println("T03")]]></design:script>
+            </extensionElements>
+            <script><![CDATA[execution.setVariable("t03", true)
+System.out.println("T03")]]></script>
+          </scriptTask>
+          <endEvent id="endNoneEvent4">
+            <extensionElements>
+              <design:stencilid><![CDATA[EndNoneEvent]]></design:stencilid>
+            </extensionElements>
+          </endEvent>
+          <sequenceFlow id="sequenceFlow10" sourceRef="startSignalEvent2" targetRef="scriptTask3">
+            <extensionElements>
+              <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+            </extensionElements>
+          </sequenceFlow>
+          <sequenceFlow id="sequenceFlow11" sourceRef="scriptTask3" targetRef="endNoneEvent4">
+            <extensionElements>
+              <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+            </extensionElements>
+          </sequenceFlow>
+        </subProcess>
+        <sequenceFlow id="sequenceFlow7" sourceRef="startNoneEvent2" targetRef="scriptTask2">
+          <extensionElements>
+            <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+          </extensionElements>
+        </sequenceFlow>
+        <sequenceFlow id="sequenceFlow8" sourceRef="scriptTask2" targetRef="intermediateSignalEventThrowing2">
+          <extensionElements>
+            <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+          </extensionElements>
+        </sequenceFlow>
+        <sequenceFlow id="sequenceFlow9" sourceRef="intermediateSignalEventThrowing2" targetRef="endNoneEvent3">
+          <extensionElements>
+            <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+          </extensionElements>
+        </sequenceFlow>
+      </subProcess>
+      <startEvent id="startSignalEvent3" isInterrupting="true">
+        <extensionElements>
+          <design:stencilid><![CDATA[StartSignalEvent]]></design:stencilid>
+        </extensionElements>
+        <signalEventDefinition signalRef="call1"></signalEventDefinition>
+      </startEvent>
+      <endEvent id="endNoneEvent5">
+        <extensionElements>
+          <design:stencilid><![CDATA[EndNoneEvent]]></design:stencilid>
+        </extensionElements>
+      </endEvent>
+      <sequenceFlow id="sequenceFlow13" sourceRef="startSignalEvent3" targetRef="expandedSubProcess1">
+        <extensionElements>
+          <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+        </extensionElements>
+      </sequenceFlow>
+      <sequenceFlow id="sequenceFlow14" sourceRef="expandedSubProcess1" targetRef="endNoneEvent5">
+        <extensionElements>
+          <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+        </extensionElements>
+      </sequenceFlow>
+    </subProcess>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_signalTestProcess">
+    <bpmndi:BPMNPlane bpmnElement="signalTestProcess" id="BPMNPlane_signalTestProcess">
+      <bpmndi:BPMNShape bpmnElement="startnoneevent1" id="BPMNShape_startnoneevent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="117.0" y="261.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusive_Databased_Gateway1" id="BPMNShape_exclusive_Databased_Gateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="337.0" y="256.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endNoneEvent1" id="BPMNShape_endNoneEvent1">
+        <omgdc:Bounds height="28.0" width="28.0" x="570.0" y="262.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endNoneEvent2" id="BPMNShape_endNoneEvent2">
+        <omgdc:Bounds height="28.0" width="28.0" x="570.0" y="345.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="intermediateSignalEventCatching1" id="BPMNShape_intermediateSignalEventCatching1">
+        <omgdc:Bounds height="30.0" width="30.0" x="441.0" y="261.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="intermediateSignalEventThrowing1" id="BPMNShape_intermediateSignalEventThrowing1">
+        <omgdc:Bounds height="30.0" width="30.0" x="447.0" y="344.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scriptTask1" id="BPMNShape_scriptTask1">
+        <omgdc:Bounds height="80.0" width="100.0" x="192.0" y="236.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="eventSubprocess4" id="BPMNShape_eventSubprocess4">
+        <omgdc:Bounds height="375.0" width="795.0" x="58.5" y="420.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="expandedSubProcess1" id="BPMNShape_expandedSubProcess1">
+        <omgdc:Bounds height="327.5" width="525.0" x="163.5" y="437.5"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startNoneEvent2" id="BPMNShape_startNoneEvent2">
+        <omgdc:Bounds height="30.0" width="30.0" x="198.5" y="510.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scriptTask2" id="BPMNShape_scriptTask2">
+        <omgdc:Bounds height="80.0" width="100.0" x="290.5" y="485.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="intermediateSignalEventThrowing2" id="BPMNShape_intermediateSignalEventThrowing2">
+        <omgdc:Bounds height="30.0" width="30.0" x="480.0" y="510.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endNoneEvent3" id="BPMNShape_endNoneEvent3">
+        <omgdc:Bounds height="28.0" width="28.0" x="628.5" y="511.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="eventSubprocess3" id="BPMNShape_eventSubprocess3">
+        <omgdc:Bounds height="155.0" width="495.0" x="178.5" y="600.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startSignalEvent2" id="BPMNShape_startSignalEvent2">
+        <omgdc:Bounds height="30.0" width="30.0" x="198.5" y="670.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scriptTask3" id="BPMNShape_scriptTask3">
+        <omgdc:Bounds height="80.0" width="100.0" x="298.5" y="645.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endNoneEvent4" id="BPMNShape_endNoneEvent4">
+        <omgdc:Bounds height="28.0" width="28.0" x="583.5" y="671.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startSignalEvent3" id="BPMNShape_startSignalEvent3">
+        <omgdc:Bounds height="30.0" width="30.0" x="100.5" y="592.5"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endNoneEvent5" id="BPMNShape_endNoneEvent5">
+        <omgdc:Bounds height="28.0" width="28.0" x="808.5" y="587.25"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow5" id="BPMNEdge_sequenceFlow5">
+        <omgdi:waypoint x="470.9499988846499" y="276.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="276.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow6" id="BPMNEdge_sequenceFlow6">
+        <omgdi:waypoint x="476.9499987722938" y="359.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="359.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow3" id="BPMNEdge_sequenceFlow3">
+        <omgdi:waypoint x="376.5369266055019" y="276.4030612244898"></omgdi:waypoint>
+        <omgdi:waypoint x="441.0001867690896" y="276.0758874694078"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow4" id="BPMNEdge_sequenceFlow4">
+        <omgdi:waypoint x="357.5" y="295.4385290556901"></omgdi:waypoint>
+        <omgdi:waypoint x="357.5" y="359.0"></omgdi:waypoint>
+        <omgdi:waypoint x="447.0" y="359.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow1" id="BPMNEdge_sequenceFlow1">
+        <omgdi:waypoint x="146.9499984899576" y="276.0"></omgdi:waypoint>
+        <omgdi:waypoint x="191.9999999999917" y="276.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow2" id="BPMNEdge_sequenceFlow2">
+        <omgdi:waypoint x="291.9499999999977" y="276.21623376623376"></omgdi:waypoint>
+        <omgdi:waypoint x="337.4130434782609" y="276.4130434782609"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow11" id="BPMNEdge_sequenceFlow11">
+        <omgdi:waypoint x="398.45000000000005" y="685.0"></omgdi:waypoint>
+        <omgdi:waypoint x="583.5" y="685.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow10" id="BPMNEdge_sequenceFlow10">
+        <omgdi:waypoint x="228.44999899727569" y="685.0"></omgdi:waypoint>
+        <omgdi:waypoint x="298.5" y="685.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow9" id="BPMNEdge_sequenceFlow9">
+        <omgdi:waypoint x="509.9499991599738" y="525.0"></omgdi:waypoint>
+        <omgdi:waypoint x="628.5" y="525.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow7" id="BPMNEdge_sequenceFlow7">
+        <omgdi:waypoint x="228.44997163179102" y="525.2242093189634"></omgdi:waypoint>
+        <omgdi:waypoint x="290.49999999997857" y="525.0999933271053"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow8" id="BPMNEdge_sequenceFlow8">
+        <omgdi:waypoint x="390.44999999976693" y="525.0"></omgdi:waypoint>
+        <omgdi:waypoint x="480.0" y="525.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow14" id="BPMNEdge_sequenceFlow14">
+        <omgdi:waypoint x="688.45" y="601.25"></omgdi:waypoint>
+        <omgdi:waypoint x="808.5" y="601.25"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow13" id="BPMNEdge_sequenceFlow13">
+        <omgdi:waypoint x="130.4470328438544" y="607.1981275579651"></omgdi:waypoint>
+        <omgdi:waypoint x="163.49999999999812" y="606.532809983897"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
